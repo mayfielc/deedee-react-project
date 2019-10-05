@@ -1,18 +1,37 @@
 import React from 'react';
+import Login from './components/Login/Login';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>Dee Dee says Podcast</h1>
-        <h3>A place for your favorite podcasts!</h3>
- 
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    username: null
+  }
+  handleLogin = (authRes) => {
+  this.setState({
+    username: authRes.profileObj.name
+  }) 
+  }
+  
+  render() {
+    
+    return (
+      <div>
+        {
+          this.state.username ?
+          (
+            <h1>{this.state.username} LOGGED IN</h1>
+          ) 
+          : (
+            <Login
+              handleLogin={this.handleLogin}
+            />
+            )
+
+        }
+      </div>
+      )
+  }
 }
 
 export default App;
