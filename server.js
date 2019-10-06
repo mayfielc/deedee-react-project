@@ -3,9 +3,10 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cors = require('cors');
-
+const MongoClient = require('mongodb').MongoClient;
 const app = express();
 
+require('dotenv').config();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
@@ -30,6 +31,20 @@ app.get('/podcasts', function(req, res) {
         }
     });
 });
+
+app.get('/createUser', (req, res) => {
+    const {userid} = req.query
+    
+    MongoClient.connect(
+        process.env.DATABASE_URL, 
+    { useNewUrlParser: true }, 
+    (err, client) => {
+        const db = client.db('testDatabase')
+        const collection = db.collection('testCollection')
+        collection.insertOne({userid: userid})
+        client.close()
+    });
+})
 
 const port = process.env.PORT || 3001;
 

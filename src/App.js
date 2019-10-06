@@ -7,7 +7,14 @@ class App extends React.Component {
   state = {
     username: null
   }
+
+  // componentDidMount = () => {
+  //   fetch('http://localhost:3001/test')
+  // }
+
   handleLogin = (authRes) => {
+  // console.log('authRes: ', authRes.googleId)
+  // fetch(`http://localhost:3001/createUser?userid=${authRes.googleId}`)
   this.setState({
     username: authRes.profileObj.name
   }) 
